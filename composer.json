@@ -1,8 +1,30 @@
 {
+    "name": "janschumann/dic",
+    "type": "drupal-module",
+    "description": "Integrates Symfony´s dependency injection container with drupal.",
+    "keywords": ["drupal", "web"],
+    "homepage": "https://github.com/janschumann/drupal-dic",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jan Schumann",
+            "homepage": "https://github.com/janschumann"
+        }
+    ],
     "require": {
+        "php": ">=5.3.3",
+        "symfony/yaml": "2.2.*"
         "symfony/config": "2.4.*",
         "symfony/dependency-injection": "2.4.*",
         "symfony/filesystem": "2.4.*",
         "symfony/http-kernel": "2.4.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Drupal\\Dic": "src/"
+        }
     }
 }
