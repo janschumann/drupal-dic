@@ -4,12 +4,22 @@
  * Register namespace prefixes
  */
 function _dic_register() {
-  $loader = drupal_classloader();
-  $loader->addPrefix('Symfony\Component\Config', dirname(__FILE__) . '/vendor/symfony/config');
-  $loader->addPrefix('Symfony\Component\DependencyInjection', dirname(__FILE__) . '/vendor/symfony/dependency-injection');
-  $loader->addPrefix('Symfony\Component\Filesystem', dirname(__FILE__) . '/vendor/symfony/filesystem');
-  $loader->addPrefix('Symfony\Component\HttpKernel', dirname(__FILE__) . '/../vendor/symfony/http-kernel');
-  $loader->addPrefix('Drupal\Dic', dirname(__FILE__) . '/src');
+  if (function_exists('drupal_classloader')) {
+
+
+    $loader = drupal_classloader();
+
+    // This file is created by composer when installing the dependencies of the logging-component with it.
+    // To use it with the already installed classloader the namespace is registered.
+    $map = require_once DRUPAL_ROOT . '/../vendor/composer/autoload_namespaces.php';
+
+    // changes in api of Classloader between 2.0.x and 2.2.x
+    if (method_exists($loader, 'addPrefixes')) {
+      $loader->addPrefixes($map);
+    } else {
+      $loader->registerNamespaces($map);
+    }
+  }
 }
 
 /**
