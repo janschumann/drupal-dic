@@ -1,0 +1,78 @@
+<?php
+
+require_once dirname(__FILE__) . '/dic.inc';
+
+/**
+ * Implementation of hook_boot
+ */
+function dic_boot() {
+  // ensure a non booted kernel
+  _dic_kernel(TRUE);
+}
+
+/**
+ * Implementation of hook_init
+ */
+function dic_init() {
+  // get a the kernel
+  $kernel = _dic_kernel();
+  // set the bundles to be registered with the container
+  $kernel->setDrupalBundles(module_invoke_all('register_bundle'));
+  // boot the kernel
+  $kernel->boot();
+
+  // set the container
+  dic_container($kernel->getContainer());
+
+  // boot all bundles
+  foreach ($kernel->getBundles() as $bundle) {
+    $bundle->boot();
+  }
+}
+
+/**
+ * Implements hook_modules_installed().
+ */
+function dic_modules_installed(array $modules) {
+  // do the same as in dic_modules_enabled()
+  dic_modules_enabled($modules);
+}
+
+/**
+ * Implements hook_modules_enabled().
+ */
+function dic_modules_enabled(array $modules) {
+  inject_flush_caches();
+
+  // rebuild the dic
+  dic_boot();
+  dic_init();
+}
+
+/**
+ * Implements hook_flush_caches().
+ */
+function dic_flush_caches() {
+  $kernel = _dic_kernel();
+  $fs = new \Symfony\Component\Filesystem\Filesystem();
+  $fs->remove($kernel->getCacheDir());
+
+  return array();
+}
+
+/**
+ * Retrieve the container or set a new one
+ *
+ * @param \Symfony\Component\DependencyInjection\ContainerInterface $new_container
+ *
+ * @return \Symfony\Component\DependencyInjection\ContainerInterface
+ */
+function dic_container(\Symfony\Component\DependencyInjection\ContainerInterface $new_container = NULL) {
+  static $container = NULL;
+
+  if (isset($new_container)) {
+    $container = $new_container;
+  }
+
+  return $container;
+}
