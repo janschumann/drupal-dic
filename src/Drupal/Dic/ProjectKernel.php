@@ -59,7 +59,9 @@ class ProjectKernel extends Kernel {
    */
   public function registerContainerConfiguration(LoaderInterface $loader)
   {
-    $loader->load(__DIR__ . '/../../../../../../../default/settings_' . $this->getEnvironment() . '.xml');
+    if (file_exists(__DIR__ . '/../../../../../../../default/settings_' . $this->getEnvironment() . '.xml')) {
+      $loader->load(__DIR__ . '/../../../../../../../default/settings_' . $this->getEnvironment() . '.xml');
+    }
   }
 
   /**
