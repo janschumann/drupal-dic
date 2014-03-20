@@ -6,7 +6,6 @@
 function _dic_register() {
   if (function_exists('drupal_classloader')) {
 
-
     $loader = drupal_classloader();
 
     // This file is created by composer when installing the dependencies of the logging-component with it.
