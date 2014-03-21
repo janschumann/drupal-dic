@@ -59,3 +59,45 @@ function _dic_kernel($ensureBootable = false) {
 
   return $kernel;
 }
+
+/**
+ * Retrieves bundles from other modules and handles autoloading for them
+ *
+ * @retrun array an array of bundles
+ */
+function _dic_get_autoloaded_bundles($debug = false) {
+  static $bundle_info = array();
+
+  if (0 === count($bundle_info)) {
+    // do not load from cache in debug mode
+    if (false === $debug) {
+      // get bundle info from cache (variables)
+      $bundle_info = cache_get('dic:bundle_info');
+      // bundle info cache may be empty and returns no array
+      if (!is_array($bundle_info)) {
+        $bundle_info = array();
+      }
+    }
+    if (0 === count($bundle_info)) {
+      // fetch bundle information from modules
+      $bundle_info = module_invoke_all('dic_bundle_info');
+      // cache bundle info
+      cache_set('dic:bundle_info', $bundle_info);
+    }
+  }
+
+  $bundles = array();
+  if (isset($bundle_info['bundles']) && is_array($bundle_info['bundles'])) {
+    $bundles = $bundle_info['bundles'];
+
+    // initialize autoloading if necessary
+    if (isset($bundle_info['autoload']) && is_array($bundle_info['bundles'])) {
+      if (false === _dic_register($bundle_info['autoload'])) {
+        drupal_set_message('Autoloading bundles failed!', 'error');
+        return array();
+      }
+    }
+  }
+
+  return $bundles;
+}
