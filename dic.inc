@@ -50,7 +50,11 @@ function _dic_kernel($ensureBootable = false) {
     if (!$rootDir) {
       $rootDir = DRUPAL_ROOT . '/' . variable_get('file_public_path', '');
     }
-    $kernel = new \Drupal\Dic\ProjectKernel($environment, $debug, $rootDir);
+    $configDir   = variable_get('dic_config_dir', false);
+    if (!$configDir) {
+      $configDir = $rootDir . '/sites/default';
+    }
+    $kernel = new \Drupal\Dic\ProjectKernel($environment, $debug, $rootDir, $configDir);
   }
   elseif (true === $ensureBootable) {
     // clone the kernel to make sure it will be (re-)booted

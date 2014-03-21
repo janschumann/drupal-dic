@@ -11,6 +11,10 @@ class ProjectKernel extends Kernel {
    * @var array
    */
   private $drupalBundles = array();
+  /**
+   * @var string
+   */
+  private $configDir = '';
 
   /**
    * Constructor.
@@ -23,10 +27,11 @@ class ProjectKernel extends Kernel {
    * @param bool   $debug
    * @param        $rootDir
    */
-  public function __construct($environment, $debug, $rootDir)
+  public function __construct($environment, $debug, $rootDir, $configDir)
   {
-    $this->rootDir = $rootDir;
     $this->name = 'DrupalProjectKernel';
+    $this->rootDir = $rootDir;
+    $this->configDir = $configDir;
 
     parent::__construct($environment, $debug);
   }
@@ -59,9 +64,10 @@ class ProjectKernel extends Kernel {
    */
   public function registerContainerConfiguration(LoaderInterface $loader)
   {
+    $settings = $this->configDir . '/settings_' . $this->getEnvironment() . '.xml';
     // check if settings exists. this will allow the module to be installed before any settings are provided
-    if (file_exists(__DIR__ . '/../../../../../../../default/settings_' . $this->getEnvironment() . '.xml')) {
-      $loader->load(__DIR__ . '/../../../../../../../default/settings_' . $this->getEnvironment() . '.xml');
+    if (file_exists($settings)) {
+      $loader->load($settings);
     }
   }
 
@@ -75,7 +81,7 @@ class ProjectKernel extends Kernel {
     $parameters = array();
     foreach ($_SERVER as $key => $value) {
       if (0 === strpos($key, 'DRUPAL__')) {
-        $parameters[strtolower(str_replace('__', '.', substr($key, 9)))] = $value;
+        $parameters[strtolower(str_replace('__', '.', substr($key, 8)))] = $value;
       }
     }
 
