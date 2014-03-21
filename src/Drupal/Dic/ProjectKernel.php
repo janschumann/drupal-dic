@@ -59,6 +59,7 @@ class ProjectKernel extends Kernel {
    */
   public function registerContainerConfiguration(LoaderInterface $loader)
   {
+    // check if settings exists. this will allow the module to be installed before any settings are provided
     if (file_exists(__DIR__ . '/../../../../../../../default/settings_' . $this->getEnvironment() . '.xml')) {
       $loader->load(__DIR__ . '/../../../../../../../default/settings_' . $this->getEnvironment() . '.xml');
     }
