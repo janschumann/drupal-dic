@@ -38,21 +38,21 @@ function _dic_register($map = array()) {
  * @return \Drupal\Dic\ProjectKernel
  */
 function _dic_kernel($ensureBootable = false) {
-  static $kernel = NULL;
+  static $kernel = null;
 
   if (is_null($kernel)) {
     _dic_register();
 
     // initialize the kernel
-    $environment = variable_get('dic_environment', 'dev');
-    $debug       = variable_get('dic_debug', FALSE);
-    $rootDir     = variable_get('dic_root_dir', FALSE);
+    $environment = variable_get('dic_environment', 'prod');
+    $debug       = variable_get('dic_debug', false);
+    $rootDir     = variable_get('dic_root_dir', false);
     if (!$rootDir) {
       $rootDir = DRUPAL_ROOT . '/' . variable_get('file_public_path', '');
     }
     $kernel = new \Drupal\Dic\ProjectKernel($environment, $debug, $rootDir);
   }
-  elseif (TRUE === $ensureBootable) {
+  elseif (true === $ensureBootable) {
     // clone the kernel to make sure it will be (re-)booted
     $kernel = clone $kernel;
   }
