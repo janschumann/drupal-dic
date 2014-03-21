@@ -14,11 +14,10 @@ function dic_boot() {
  * Implementation of hook_init
  */
 function dic_init() {
-  // get a the kernel
-  $kernel = _dic_kernel();
-  // set the bundles to be registered with the container
-  $kernel->setDrupalBundles(module_invoke_all('register_bundle'));
   // boot the kernel
+  $kernel = _dic_kernel();
+  $bundles = _dic_get_autoloaded_bundles($kernel->isDebug());
+  $kernel->setDrupalBundles($bundles);
   $kernel->boot();
 
   // set the container
@@ -34,7 +33,15 @@ function dic_init() {
  * Implements hook_modules_installed().
  */
 function dic_modules_installed(array $modules) {
-  // do the same as in dic_modules_enabled()
+  // rebuild the sic
+  dic_modules_enabled($modules);
+}
+
+/**
+ * Implements hook_modules_installed().
+ */
+function dic_modules_uninstalled(array $modules) {
+  // rebuild the sic
   dic_modules_enabled($modules);
 }
 
@@ -48,6 +55,15 @@ function dic_modules_enabled(array $modules) {
   dic_boot();
   dic_init();
 }
+
+/**
+ * Implements hook_modules_disabled().
+ */
+function dic_modules_disabled($modules) {
+  // rebuild the dic
+  dic_modules_enabled($modules);
+}
+
 
 /**
  * Implements hook_flush_caches().
