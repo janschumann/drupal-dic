@@ -1,67 +1,45 @@
 <?php
 
-require_once dirname(__FILE__) . '/dic.inc';
-
-/**
- * Implementation of hook_boot
- */
-function dic_boot() {
-  // ensure a non booted kernel
-  _dic_kernel(TRUE);
-}
+require_once dirname(__FILE__) . '/dic.helper.inc';
 
 /**
  * Implementation of hook_init
  */
 function dic_init() {
-  // boot the kernel
-  $kernel = _dic_kernel();
-  $bundles = _dic_get_autoloaded_bundles($kernel->isDebug());
-  $kernel->setDrupalBundles($bundles);
-  $kernel->boot();
-
-  // set the container
-  dic_container($kernel->getContainer());
-
-  // boot all bundles
-  foreach ($kernel->getBundles() as $bundle) {
-    $bundle->boot();
-  }
+  dic_container(_dic_get_helper()->getContainer());
 }
 
 /**
  * Implements hook_modules_installed().
  */
 function dic_modules_installed(array $modules) {
-  // rebuild the sic
-  dic_modules_enabled($modules);
+  dic_flush_caches();
+
+  // re-build the
+  $helper = _dic_get_helper();
+  $helper->setBundleInfo(_dic_get_bundle_info());
+  dic_container($helper->getContainer());
 }
 
 /**
  * Implements hook_modules_installed().
  */
 function dic_modules_uninstalled(array $modules) {
-  // rebuild the sic
-  dic_modules_enabled($modules);
+  dic_modules_installed($modules);
 }
 
 /**
  * Implements hook_modules_enabled().
  */
 function dic_modules_enabled(array $modules) {
-  dic_flush_caches();
-
-  // rebuild the dic
-  dic_boot();
-  dic_init();
+  dic_modules_installed($modules);
 }
 
 /**
  * Implements hook_modules_disabled().
  */
 function dic_modules_disabled($modules) {
-  // rebuild the dic
-  dic_modules_enabled($modules);
+  dic_modules_installed($modules);
 }
 
 
@@ -69,9 +47,7 @@ function dic_modules_disabled($modules) {
  * Implements hook_flush_caches().
  */
 function dic_flush_caches() {
-  $kernel = _dic_kernel();
-  $fs = new \Symfony\Component\Filesystem\Filesystem();
-  $fs->remove($kernel->getCacheDir());
+  _dic_get_helper()->flushCaches();
 
   return array();
 }
