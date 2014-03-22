@@ -15,7 +15,7 @@ function dic_init() {
 function dic_modules_installed(array $modules) {
   dic_flush_caches();
 
-  // re-build the
+  // re-build the container
   $helper = _dic_get_helper();
   $helper->setBundleInfo(_dic_get_bundle_info());
   dic_container($helper->getContainer());
