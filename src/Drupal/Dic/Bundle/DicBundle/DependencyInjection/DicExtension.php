@@ -9,7 +9,6 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Config\Resource\DirectoryResource;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 
@@ -30,6 +29,13 @@ class DicExtension extends Extension
     $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
     $loader->load('services.xml');
+
+    $configuration = $this->getConfiguration($configs, $container);
+    $config = $this->processConfiguration($configuration, $configs);
+
+    foreach ($config as $key => $value) {
+      $container->setParameter($key, $value);
+    }
   }
 
   /**
@@ -44,6 +50,6 @@ class DicExtension extends Extension
 
   public function getNamespace()
   {
-    return 'http://drupal.org/project/dic/schema/dic';
+    return 'http://bauermedia.com/schema/dic/dic';
   }
 }

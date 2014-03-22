@@ -20,6 +20,8 @@ use Symfony\Component\Yaml\Exception\RuntimeException;
  */
 class DicHelper {
 
+  private static $instance;
+
   /**
    * @var boolean
    */
@@ -69,13 +71,11 @@ class DicHelper {
    * @return DicHelper
    */
   public static function getInstance() {
-    static $instance;
-
-    if (!$instance) {
-      $instance = new self();
+    if (!self::$instance) {
+      self::$instance = new self();
     }
 
-    return $instance;
+    return self::$instance;
   }
 
   /**
@@ -96,7 +96,15 @@ class DicHelper {
     $this->configDir = $configDir;
 
     $this->kernel = new ProjectKernel($this->environment, $this->debug, $this->rootDir, $this->configDir);
+
     $this->initialized = true;
+  }
+
+  /**
+   * Reset this instance
+   */
+  public static function reset() {
+    self::$instance = null;
   }
 
   /**
