@@ -83,14 +83,14 @@ class EmptyContainer extends Container
             'kernel.root_dir' => '/Users/jan.schumann/Development/Sources/php/drupal-dic/test/phpunit/Drupal/Dic/../../../data',
             'kernel.environment' => 'empty',
             'kernel.debug' => true,
-            'kernel.name' => 'DrupalProjectKernel',
+            'kernel.name' => 'Drupal',
             'kernel.cache_dir' => '/Users/jan.schumann/Development/Sources/php/drupal-dic/test/phpunit/Drupal/Dic/../../../data/cache/empty',
             'kernel.logs_dir' => '/Users/jan.schumann/Development/Sources/php/drupal-dic/test/phpunit/Drupal/Dic/../../../data/logs',
             'kernel.bundles' => array(
 
             ),
             'kernel.charset' => 'UTF-8',
-            'kernel.container_class' => 'DrupalProjectKernelEmptyDebugProjectContainer'
+            'kernel.container_class' => 'DrupalEmptyDebugProjectContainer'
         );
     }
 }

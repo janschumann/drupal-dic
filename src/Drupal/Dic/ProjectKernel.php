@@ -26,6 +26,7 @@ class ProjectKernel extends Kernel {
    */
   public function __construct($environment, $debug, $rootDir, $configDir)
   {
+    $this->name = "Drupal";
     $this->rootDir = $rootDir;
     $this->configDir = $configDir;
 
