@@ -1,3 +1,9 @@
+# IDE files
+.idea
+*.iml
+
+# vendor files
 vendor/
+
+# composer
 composer.lock
-phpunit.xml
