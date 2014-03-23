@@ -15,10 +15,10 @@ function dic_init() {
 function dic_modules_installed(array $modules) {
   dic_flush_caches();
 
-  // re-build the container
-  $helper = _dic_get_helper();
-  $helper->setBundleInfo(_dic_get_bundle_info());
-  dic_container($helper->getContainer());
+  // create a new container. this will not ne used during this request,
+  // but it will be ready to use on the next one
+  _dic_get_helper()->setBundleInfo(_dic_get_bundle_info(false));
+  _dic_get_helper()->getContainer();
 }
 
 /**

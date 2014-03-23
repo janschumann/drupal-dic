@@ -39,6 +39,7 @@ class ProjectKernel extends Kernel {
   /**
    * Set all bundles found by the hook register_bundles
    * These will be used by registerBundles()
+   * Every time new bundles are set, the kernel will boot again if requested.
    *
    * @param array $bundles
    */
