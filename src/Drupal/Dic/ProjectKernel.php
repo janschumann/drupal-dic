@@ -19,17 +19,13 @@ class ProjectKernel extends Kernel {
   /**
    * Constructor.
    *
-   * This adds the parameter rootDir witch should be set to the
-   * root save path of cache and log files that should be used by this kernel.
-   * Usually a drupal temp or assets path will be used here
-   *
-   * @param string $environment
-   * @param bool   $debug
-   * @param        $rootDir
+   * @param string  $environment
+   * @param bool    $debug
+   * @param string  $rootDir      The root path of all files this kernel creates
+   * @param string  $configDir    The directory to find configuration files
    */
   public function __construct($environment, $debug, $rootDir, $configDir)
   {
-    $this->name = 'DrupalProjectKernel';
     $this->rootDir = $rootDir;
     $this->configDir = $configDir;
 
@@ -37,9 +33,7 @@ class ProjectKernel extends Kernel {
   }
 
   /**
-   * Set all bundles found by the hook register_bundles
-   * These will be used by registerBundles()
-   * Every time new bundles are set, the kernel will boot again if requested.
+   * Set all bundles used by drupal modules
    *
    * @param array $bundles
    */
@@ -67,7 +61,7 @@ class ProjectKernel extends Kernel {
   public function registerContainerConfiguration(LoaderInterface $loader)
   {
     $settings = $this->configDir . '/settings_' . $this->getEnvironment() . '.xml';
-    // check if settings exists. this will allow the module to be installed before any settings are provided
+    // check if settings exists. this will allow the dic module to be installed before any settings are provided
     if (file_exists($settings)) {
       $loader->load($settings);
     }

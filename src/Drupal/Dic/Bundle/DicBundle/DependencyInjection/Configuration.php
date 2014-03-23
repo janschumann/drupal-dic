@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: jan.schumann
- * Date: 20.03.14
- * Time: 16:30
- */
 
 namespace Drupal\Dic\Bundle\DicBundle\DependencyInjection;
 

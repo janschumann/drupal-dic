@@ -3,7 +3,25 @@
 require_once dirname(__FILE__) . '/dic.helper.inc';
 
 /**
- * Implementation of hook_init
+ * Implementation of hook_menu()
+ */
+function dic_menu() {
+  $items = array();
+
+  $items['admin/config/development/dic'] = array(
+    'title' => 'Dependency Injection',
+    'description' => "Configure Dependency Injection settings.",
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('dic_admin_settings_form'),
+    'access arguments' => array('administer dic'),
+    'weight' => 10,
+    'file' => 'dic.admin.inc',
+  );
+
+  return $items;
+}
+/**
+ * Implementation of hook_init()
  */
 function dic_init() {
   dic_container(_dic_get_helper()->getContainer());
@@ -15,10 +33,12 @@ function dic_init() {
 function dic_modules_installed(array $modules) {
   dic_flush_caches();
 
-  // create a new container. this will not ne used during this request,
-  // but it will be ready to use on the next one
-  _dic_get_helper()->setBundleInfo(_dic_get_bundle_info(false));
-  _dic_get_helper()->getContainer();
+  // prepare a new kernel
+  $helper = _dic_get_helper(true);
+  // make sure the bundles are not loaded from cache
+  $helper->setBundleInfo(_dic_get_bundle_info(false));
+  // create the new container (which will not ne usable during this request, but prepared for the next one)
+  $helper->getContainer();
 }
 
 /**

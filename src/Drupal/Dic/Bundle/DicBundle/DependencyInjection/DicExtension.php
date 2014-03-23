@@ -50,6 +50,6 @@ class DicExtension extends Extension
 
   public function getNamespace()
   {
-    return 'http://bauermedia.com/schema/dic/dic';
+    return 'http://example.com/schema/dic/dic';
   }
 }

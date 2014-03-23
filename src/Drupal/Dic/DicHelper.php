@@ -4,7 +4,7 @@ namespace Drupal\Dic;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\ClassLoader\ClassLoader;
-use \Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * This encapsulates the container construction from drupal
@@ -21,9 +21,9 @@ class DicHelper {
    */
   private $classLoader = null;
   /**
-   * @var array
+   * @var boolean
    */
-  private $bootedBundles = true;
+  private $bundlesBooted = true;
 
   /**
    * Constructor.
@@ -59,7 +59,7 @@ class DicHelper {
    */
   public function setBundleInfo(array $bundleInfo) {
     $this->kernel->setDrupalBundles($this->getAutoloadedBundles($bundleInfo));
-    $this->bootedBundles = false;
+    $this->bundlesBooted = false;
   }
 
   /**
@@ -72,11 +72,11 @@ class DicHelper {
     $this->kernel->boot();
 
     // boot bundles if necessary
-    if (!$this->bootedBundles) {
+    if (!$this->bundlesBooted) {
       foreach ($this->kernel->getBundles() as $bundle) {
         $bundle->boot();
       }
-      $this->bootedBundles = true;
+      $this->bundlesBooted = true;
     }
 
     return $this->kernel->getContainer();
@@ -85,9 +85,13 @@ class DicHelper {
   /**
    * Cleanup cache files
    */
-  public function flushCaches() {
+  public function flushCaches($all = false) {
+    $dir = $this->kernel->getCacheDir();
+    if ($all) {
+      $dir .= '/..';
+    }
     $fs = new Filesystem();
-    $fs->remove($this->kernel->getCacheDir());
+    $fs->remove(realpath($dir));
   }
 
   private function registerNamespaces($map) {
