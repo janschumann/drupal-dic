@@ -44,6 +44,7 @@ class ProjectKernel extends Kernel {
    */
   public function setDrupalBundles(array $bundles) {
     $this->drupalBundles = $bundles;
+    $this->booted = false;
   }
 
   /**

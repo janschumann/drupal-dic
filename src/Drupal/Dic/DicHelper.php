@@ -53,7 +53,7 @@ class DicHelper {
   /**
    * @var array
    */
-  private $bundlesNeedBoot = true;
+  private $booted = false;
   /**
    * @var ProjectKernel
    */
@@ -129,11 +129,14 @@ class DicHelper {
 
     if ($this->bundleInfo !== $bundleInfo) {
       $this->bundleInfo = $bundleInfo;
-      $this->bundlesNeedBoot = true;
       $this->kernel->setDrupalBundles($this->getAutoloadedBundles());
-    }
+      // if the kernel already been booted, make sure a fresh container will be build
+      if ($this->booted) {
+        $this->flushCaches();
+      }
 
-    $this->cloneKernel();
+      $this->booted = false;
+    }
   }
 
   /**
@@ -147,6 +150,7 @@ class DicHelper {
     }
 
     $this->boot();
+
     return $this->kernel->getContainer();
   }
 
@@ -167,22 +171,17 @@ class DicHelper {
    */
   private function boot() {
     if ($this->isInitialized()) {
+      // kernel will only boot if necessary
       $this->kernel->boot();
-      if ($this->bundlesNeedBoot) {
+
+      // boot bundles if necessary
+      if (!$this->booted) {
         foreach ($this->kernel->getBundles() as $bundle) {
           $bundle->boot();
         }
-        $this->bundlesNeedBoot = false;
       }
+      $this->booted = true;
     }
-  }
-
-  private function cloneKernel() {
-    if ($this->isInitialized()) {
-      // clone the kernel to make sure it can be (re-)booted
-      $this->kernel = clone $this->kernel;
-    }
-
   }
 
   private function registerNamespaces($map = array()) {
