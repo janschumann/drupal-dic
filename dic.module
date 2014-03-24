@@ -7,7 +7,7 @@ require_once dirname(__FILE__) . '/dic.helper.inc';
  *
  * @return \Symfony\Component\DependencyInjection\ContainerInterface
  */
-function drupal_container() {
+function drupal_dic() {
   return _dic_get_helper()->getContainer();
 }
 
