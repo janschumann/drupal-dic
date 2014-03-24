@@ -6,9 +6,9 @@
  * @return \Drupal\Dic\DicHelper
  */
 function _dic_get_helper($re_initialize = false) {
-  static $helper = null;
+  static $helper;
 
-  if (is_null($helper) || $re_initialize) {
+  if (!($helper instanceof \Drupal\Dic\DicHelper) || $re_initialize) {
     // load dic parameters @see dic_menu()
     $rootDir     = variable_get('dic_root_dir', '');
     if ('' == $rootDir) {
@@ -32,7 +32,7 @@ function _dic_get_helper($re_initialize = false) {
 
     // provide the dic with bundle info
     $bundleInfo = _dic_get_bundle_info(!$kernel->isDebug());
-    if ($bundleInfo) {
+    if (!empty($bundleInfo)) {
       $helper->setBundleInfo($bundleInfo);
     }
   }
@@ -51,7 +51,10 @@ function _dic_get_bundle_info($load_from_cache = true) {
   $bundle_info = array();
 
   if ($load_from_cache) {
-    $bundle_info = cache_get('dic:bundle_info');
+    $cache = cache_get('dic:bundle_info');
+    if (is_object($cache)) {
+      $bundle_info = $cache->data;
+    }
   }
 
   if (empty($bundle_info)) {
