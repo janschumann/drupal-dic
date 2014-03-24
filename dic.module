@@ -3,30 +3,11 @@
 require_once dirname(__FILE__) . '/dic.helper.inc';
 
 /**
- * Implementation of hook_menu()
- */
-function dic_menu() {
-  $items = array();
-
-  $items['admin/config/development/dic'] = array(
-    'title' => 'Dependency Injection',
-    'description' => "Configure Dependency Injection settings.",
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('dic_admin_settings_form'),
-    'access arguments' => array('administer dic'),
-    'weight' => 10,
-    'file' => 'dic.admin.inc',
-  );
-
-  return $items;
-}
-
-/**
  * Retrieve the container
  *
  * @return \Symfony\Component\DependencyInjection\ContainerInterface
  */
-function dic_container() {
+function drupal_container() {
   return _dic_get_helper()->getContainer();
 }
 
@@ -72,4 +53,23 @@ function dic_modules_enabled(array $modules) {
  */
 function dic_modules_disabled($modules) {
   dic_modules_installed($modules);
+}
+
+/**
+ * Implementation of hook_menu()
+ */
+function dic_menu() {
+  $items = array();
+
+  $items['admin/config/development/dic'] = array(
+    'title' => 'Dependency Injection',
+    'description' => "Configure Dependency Injection settings.",
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('dic_admin_settings_form'),
+    'access arguments' => array('administer dic'),
+    'weight' => 10,
+    'file' => 'dic.admin.inc',
+  );
+
+  return $items;
 }
