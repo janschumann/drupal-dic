@@ -2,8 +2,9 @@ name = Symfony Dependency Injection Container
 description = Integrates the Symfony Dependency Injection Container to Drupal. Unlike the inject module, this includes the dic extension mechanism through bundle implementations.
 core = 7.x
 php = 5.3.3
+configure = admin/config/development/dic
 
-; Load this module before everything but after classloader.
+; Load this module before everything but after classloader_composer.
 weight = -500
 
-dependencies[] = classloader
+dependencies[] = classloader_composer
