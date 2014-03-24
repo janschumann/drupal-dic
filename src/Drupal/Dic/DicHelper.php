@@ -110,7 +110,7 @@ class DicHelper {
       // initialize autoloading if necessary
       if (isset($bundleInfo['autoload']) && is_array($bundleInfo['autoload'])) {
         if (is_null($this->classLoader)) {
-          throw new \RuntimeException("Cannot autoload classes. Plese provide a ClassLoader. See setClassLoader().");
+          throw new \RuntimeException("Cannot autoload classes. Please provide a ClassLoader. See setClassLoader().");
         }
         $this->registerNamespaces($bundleInfo['autoload']);
       }
