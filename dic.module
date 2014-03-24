@@ -20,11 +20,23 @@ function dic_menu() {
 
   return $items;
 }
+
 /**
- * Implementation of hook_init()
+ * Retrieve the container
+ *
+ * @return \Symfony\Component\DependencyInjection\ContainerInterface
  */
-function dic_init() {
-  dic_container(_dic_get_helper()->getContainer());
+function dic_container() {
+  return _dic_get_helper()->getContainer();
+}
+
+/**
+ * Implements hook_flush_caches().
+ */
+function dic_flush_caches() {
+  _dic_get_helper()->flushCaches();
+
+  return array();
 }
 
 /**
@@ -60,31 +72,4 @@ function dic_modules_enabled(array $modules) {
  */
 function dic_modules_disabled($modules) {
   dic_modules_installed($modules);
-}
-
-
-/**
- * Implements hook_flush_caches().
- */
-function dic_flush_caches() {
-  _dic_get_helper()->flushCaches();
-
-  return array();
-}
-
-/**
- * Retrieve the container or set a new one
- *
- * @param \Symfony\Component\DependencyInjection\ContainerInterface $new_container
- *
- * @return \Symfony\Component\DependencyInjection\ContainerInterface
- */
-function dic_container(\Symfony\Component\DependencyInjection\ContainerInterface $new_container = NULL) {
-  static $container = NULL;
-
-  if (isset($new_container)) {
-    $container = $new_container;
-  }
-
-  return $container;
 }
