@@ -9,6 +9,10 @@
         {
             "name": "Jan Schumann",
             "homepage": "https://github.com/janschumann"
+        },
+        {
+            "name": "Mike Lohmann",
+            "homepage": "http://deck36.de"
         }
     ],
     "require": {
