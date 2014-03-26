@@ -27,12 +27,9 @@ function _dic_get_helper($re_initialize = false) {
       $configDir = DRUPAL_ROOT . '/sites/default';
     }
 
-    $classLoader = require DRUPAL_ROOT . '/../vendor/autoload.php';
-
     // initialize kernel and helper
     $kernel = new \Drupal\Dic\ProjectKernel($environment, $debug, $rootDir, $configDir);
     $helper = new \Drupal\Dic\DicHelper($kernel);
-    $helper->setClassLoader($classLoader);
 
     // provide the dic with bundle info
     $bundleInfo = _dic_get_bundle_info(!$kernel->isDebug());

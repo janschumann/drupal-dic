@@ -28,7 +28,7 @@ function dic_init() {
 }
 
 /**
- * Implements hook_flush_caches().
+ * Implements @see hook_flush_caches().
  */
 function dic_flush_caches() {
   _dic_get_helper()->flushCaches();
@@ -47,35 +47,35 @@ function dic_enable() {
 }
 
 /**
- * Implements hook_modules_installed().
+ * Implements @see hook_modules_installed().
  */
 function dic_modules_installed(array $modules) {
   dic_enable();
 }
 
 /**
- * Implements hook_modules_installed().
+ * Implements @see hook_modules_installed().
  */
 function dic_modules_uninstalled(array $modules) {
   dic_modules_installed($modules);
 }
 
 /**
- * Implements hook_modules_enabled().
+ * Implements @see hook_modules_enabled().
  */
 function dic_modules_enabled(array $modules) {
   dic_modules_installed($modules);
 }
 
 /**
- * Implements hook_modules_disabled().
+ * Implements @see hook_modules_disabled().
  */
 function dic_modules_disabled($modules) {
   dic_modules_installed($modules);
 }
 
 /**
- * Implementation of hook_menu()
+ * Implementation of @see hook_menu()
  */
 function dic_menu() {
   $items = array();
