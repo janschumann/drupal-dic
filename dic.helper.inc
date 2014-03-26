@@ -9,7 +9,7 @@
 /**
  * Returns the dic helper
  *
- * @return DicHelper
+ * @return \Drupal\Dic\DicHelper
  */
 function _dic_get_helper($re_initialize = false) {
   static $helper;
@@ -30,6 +30,7 @@ function _dic_get_helper($re_initialize = false) {
     // initialize kernel and helper
     $kernel = new \Drupal\Dic\ProjectKernel($environment, $debug, $rootDir, $configDir);
     $helper = new \Drupal\Dic\DicHelper($kernel);
+    $helper->setClassLoader(drupal_classloader());
 
     // provide the dic with bundle info
     $bundleInfo = _dic_get_bundle_info(!$kernel->isDebug());
