@@ -1,6 +1,10 @@
 <?php
-use Drupal\Dic\DicHelper;
-use Drupal\Dic\ProjectKernel;
+
+/**
+ * Classloading might happen as recently as in @see _dic_get_helper().
+ *
+ * !! So do not use a "use" statement here !!
+ */
 
 /**
  * Returns the dic helper
@@ -10,7 +14,7 @@ use Drupal\Dic\ProjectKernel;
 function _dic_get_helper($re_initialize = false) {
   static $helper;
 
-  if (!($helper instanceof Drupal\Dic\DicHelper) || $re_initialize) {
+  if (!($helper instanceof \Drupal\Dic\DicHelper) || $re_initialize) {
     // load dic parameters @see dic_menu()
     $rootDir     = variable_get('dic_root_dir', '');
     if ('' == $rootDir) {
@@ -23,9 +27,12 @@ function _dic_get_helper($re_initialize = false) {
       $configDir = DRUPAL_ROOT . '/sites/default';
     }
 
+    $classLoader = require DRUPAL_ROOT . '/../vendor/autoload.php';
+
     // initialize kernel and helper
-    $kernel = new ProjectKernel($environment, $debug, $rootDir, $configDir);
-    $helper = new DicHelper($kernel);
+    $kernel = new \Drupal\Dic\ProjectKernel($environment, $debug, $rootDir, $configDir);
+    $helper = new \Drupal\Dic\DicHelper($kernel);
+    $helper->setClassLoader($classLoader);
 
     // provide the dic with bundle info
     $bundleInfo = _dic_get_bundle_info(!$kernel->isDebug());
