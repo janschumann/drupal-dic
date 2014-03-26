@@ -61,10 +61,28 @@ class ProjectKernel extends Kernel {
    */
   public function registerContainerConfiguration(LoaderInterface $loader)
   {
-    $settings = $this->configDir . '/settings_' . $this->getEnvironment() . '.xml';
-    // check if settings exists. this will allow the dic module to be installed before any settings are provided
+    // load bundle specific settings
+    foreach($this->getBundles() as $bundle) {
+      $this->loadSettings($loader, strtolower(str_replace('Bundle', '', $bundle->getName())));
+    }
+
+    // load general settings
+    $this->loadSettings($loader);
+  }
+
+  private function loadSettings($loader, $name = '') {
+    // try to load environment specific file
+    $prefix = $this->configDir . '/' . ($name ? $name . '_' : '') . 'settings';
+    $settings = $prefix . '_' . $this->getEnvironment() . '.xml';
     if (file_exists($settings)) {
       $loader->load($settings);
+    }
+    else {
+      // load general file as a fallback
+      $settings = $prefix . '.xml';
+      if (file_exists($settings)) {
+        $loader->load($settings);
+      }
     }
   }
 

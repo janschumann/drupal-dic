@@ -80,7 +80,7 @@ class EmptyContainer extends Container
     protected function getDefaultParameters()
     {
         return array(
-            'kernel.root_dir' => '/Users/jan.schumann/Development/Sources/php/drupal-dic/test/phpunit/Drupal/Dic/../../../data',
+            'kernel.root_dir' => __DIR__ . '/Users/jan.schumann/Development/Sources/php/drupal-dic/test/phpunit/Drupal/Dic/../../../data',
             'kernel.environment' => 'empty',
             'kernel.debug' => true,
             'kernel.name' => 'Drupal',

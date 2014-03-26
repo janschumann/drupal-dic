@@ -34,7 +34,7 @@ class DicHelperTest extends \PHPUnit_Framework_TestCase {
     $this->helper = new DicHelper(new ProjectKernel('empty', true, $this->rootDir, $this->fixturesDir));
     $container = $this->helper->getContainer();
 
-    $this->assertEquals($expected->getParameterBag()->all(), $container->getParameterBag()->all());
+    $this->assertEquals($expected->getParameter('kernel.bundles'), $container->getParameter('kernel.bundles'));
   }
 
   public function testBundlesAutoloadInfoIsAddedToClassLoader() {
