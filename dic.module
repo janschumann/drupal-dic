@@ -12,6 +12,22 @@ function drupal_dic() {
 }
 
 /**
+ * Implementation of @see hook_boot()
+ */
+function dic_boot() {
+  // initialize the kernel. this does not write the container cache file.
+  _dic_get_helper();
+}
+
+/**
+ * Implementation of @see hook_init()
+ */
+function dic_init() {
+  // hook_boot() might not be called. so make sure it is called at least here.
+  dic_boot();
+}
+
+/**
  * Implements hook_flush_caches().
  */
 function dic_flush_caches() {
@@ -21,17 +37,20 @@ function dic_flush_caches() {
 }
 
 /**
+ * Implementation of @see hook_enable().
+ */
+function dic_enable() {
+  dic_flush_caches();
+
+  // refresh bundle info cache
+  _dic_get_bundle_info(false);
+}
+
+/**
  * Implements hook_modules_installed().
  */
 function dic_modules_installed(array $modules) {
-  dic_flush_caches();
-
-  // prepare a new kernel
-  $helper = _dic_get_helper(true);
-  // make sure the bundles are not loaded from cache
-  $helper->setBundleInfo(_dic_get_bundle_info(false));
-  // create the new container (which will not ne usable during this request, but prepared for the next one)
-  $helper->getContainer();
+  dic_enable();
 }
 
 /**
