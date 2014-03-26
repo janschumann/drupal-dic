@@ -2,8 +2,8 @@
 
 namespace Drupal\Dic;
 
+use Composer\Autoload\ClassLoader;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\ClassLoader\ClassLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -95,11 +95,8 @@ class DicHelper {
   }
 
   private function registerNamespaces($map) {
-    // changes in api of Classloader between 2.0.x and 2.2.x
-    if (method_exists($this->classLoader, 'addPrefixes')) {
-      $this->classLoader->addPrefixes($map);
-    } else {
-      $this->classLoader->registerNamespaces($map);
+    foreach ($map as $prefix => $paths) {
+      $this->classLoader->add($prefix, $paths);
     }
   }
 
