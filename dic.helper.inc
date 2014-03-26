@@ -30,7 +30,9 @@ function _dic_get_helper($re_initialize = false) {
     // initialize kernel and helper
     $kernel = new \Drupal\Dic\ProjectKernel($environment, $debug, $rootDir, $configDir);
     $helper = new \Drupal\Dic\DicHelper($kernel);
-    $helper->setClassLoader(drupal_classloader());
+    if (function_exists('drupal_classloader')) {
+      $helper->setClassLoader(drupal_classloader());
+    }
 
     // provide the dic with bundle info
     $bundleInfo = _dic_get_bundle_info(!$kernel->isDebug());
