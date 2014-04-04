@@ -2,7 +2,7 @@
 
 namespace Drupal\Dic;
 
-use Symfony\Component\ClassLoader\ClassLoader;
+use Composer\Autoload\ClassLoader;
 
 class DicHelperTest extends \PHPUnit_Framework_TestCase {
 
