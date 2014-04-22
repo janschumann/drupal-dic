@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="./vendor/autoload.php" colors="true">
+
+    <testsuites>
+        <testsuite name="drupal-dic test suite">
+            <directory suffix="Test.php">./test/phpunit</directory>
+        </testsuite>
+    </testsuites>
+
+</phpunit>
