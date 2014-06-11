@@ -87,16 +87,24 @@ class ProjectKernel extends Kernel {
   }
 
   /**
-   * Consider only Server Parameters prefixed with DRUPAL__
+   * Consider
+   * - Server Parameters prefixed with DRUPAL__
+   * - Constants prefixed with DRUPAL_
    *
    * {@inheritdoc}
    */
-  protected function getEnvParameters()
-  {
+  protected function getEnvParameters() {
     $parameters = array();
     foreach ($_SERVER as $key => $value) {
       if (0 === strpos($key, 'DRUPAL__')) {
         $parameters[strtolower(str_replace('__', '.', substr($key, 8)))] = $value;
+      }
+    }
+
+    $constants = get_defined_constants(true);
+    foreach ($constants['user'] as $key => $value) {
+      if (0 === strpos($key, strtoupper($this->name) . '_')) {
+        $parameters[strtolower(str_replace('_', '.', $key))] = $value;
       }
     }
 
