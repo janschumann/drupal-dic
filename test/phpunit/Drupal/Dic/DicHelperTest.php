@@ -27,14 +27,14 @@ class DicHelperTest extends \PHPUnit_Framework_TestCase {
     $this->helper->flushCaches();
   }
 
-  public function testHelperBuildsAnEmptyContainerWithoutBundlesProvided() {
-    require_once dirname(__FILE__) . '/../../../fixtures/EmptyContainer.php';
-    $expected = new \EmptyContainer();
+  public function testDefaultContainerContainsAnEventDispatcher() {
+    require_once __DIR__ . "/../../../../dic.module";
 
-    $this->helper = new DicHelper(new ProjectKernel('empty', true, $this->rootDir, $this->fixturesDir));
+    $this->helper = new DicHelper(new ProjectKernel('development', true, $this->rootDir, $this->fixturesDir));
+    $this->helper->setBundleInfo(dic_dic_bundle_info());
     $container = $this->helper->getContainer();
 
-    $this->assertEquals($expected->getParameter('kernel.bundles'), $container->getParameter('kernel.bundles'));
+    $this->assertTrue($container->has('event_dispatcher'));
   }
 
   public function testBundlesAutoloadInfoIsAddedToClassLoader() {
@@ -62,9 +62,6 @@ class DicHelperTest extends \PHPUnit_Framework_TestCase {
 
     $container = $this->helper->getContainer();
 
-    $this->assertTrue($container->hasParameter('dic.extension.foo'));
-    $this->assertEquals('bar', $container->getParameter('dic.extension.foo'));
-    $this->assertTrue($container->hasParameter('example'));
-    $this->assertEquals('value', $container->getParameter('example'));
+    $this->assertTrue($container->has('event_dispatcher'));
   }
 }

@@ -2,11 +2,11 @@
 
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:dic="http://example.com/schema/dic/dic"
+           xmlns:dic="http://drupal.org/schema/dic/dic"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-            http://example.com/schema/dic/dic http://example.com/schema/dic/dic/dic-1.0.xsd">
+            http://drupal.org/schema/dic/dic http://drupal.org/schema/dic/dic/dic-1.0.xsd">
 
 
-    <dic:config example="value" />
+    <dic:config />
 
 </container>
