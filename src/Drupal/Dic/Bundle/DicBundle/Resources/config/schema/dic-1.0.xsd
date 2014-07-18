@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<xsd:schema xmlns="http://example.com/schema/dic/dic"
+<xsd:schema xmlns="http://drupal.org/schema/dic/dic"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            targetNamespace="http://example.com/schema/dic/dic"
+            targetNamespace="http://drupal.org/schema/dic/dic"
             elementFormDefault="qualified">
 
     <xsd:element name="config" type="config" />
 
-    <xsd:complexType name="config">
-        <xsd:attribute name="example" type="xsd:string" />
-    </xsd:complexType>
+    <xsd:complexType name="config" />
 
 </xsd:schema>

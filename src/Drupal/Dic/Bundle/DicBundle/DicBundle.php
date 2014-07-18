@@ -2,15 +2,12 @@
 
 namespace Drupal\Dic\Bundle\DicBundle;
 
-use Drupal\Dic\Bundle\DicBundle\DependencyInjection\Compiler\MyPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
-use Symfony\Component\DependencyInjection\Scope;
+use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * An example for a Bundle implementation
- *
  * @package Drupal\Dic\Bundle\DicBundle
  */
 class DicBundle extends Bundle {
@@ -19,6 +16,6 @@ class DicBundle extends Bundle {
   {
     parent::build($container);
 
-    $container->addCompilerPass(new MyPass());
+    $container->addCompilerPass(new RegisterListenersPass('event_dispatcher', 'drupal.event_listener', 'drupal.event_subscriber'), PassConfig::TYPE_BEFORE_REMOVING);
   }
 }

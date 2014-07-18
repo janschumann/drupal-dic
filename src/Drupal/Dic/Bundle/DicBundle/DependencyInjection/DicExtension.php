@@ -32,10 +32,6 @@ class DicExtension extends Extension
 
     $configuration = $this->getConfiguration($configs, $container);
     $config = $this->processConfiguration($configuration, $configs);
-
-    foreach ($config as $key => $value) {
-      $container->setParameter($key, $value);
-    }
   }
 
   /**
@@ -50,6 +46,6 @@ class DicExtension extends Extension
 
   public function getNamespace()
   {
-    return 'http://example.com/schema/dic/dic';
+    return 'http://drupal.org/schema/dic/dic';
   }
 }
