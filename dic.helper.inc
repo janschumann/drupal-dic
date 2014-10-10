@@ -27,13 +27,17 @@ function _dic_get_helper($re_initialize = false) {
       $configDir = DRUPAL_ROOT . '/sites/default';
     }
 
+    if (function_exists('drupal_classloader')) {
+      $loader = drupal_classloader();
+    } else {
+      throw new \Exception('The classloader is necessary to load ProjectKernel and DicHelper.');
+    }
+
     // initialize kernel and helper
     $kernel = new \Drupal\Dic\ProjectKernel($environment, $debug, $rootDir, $configDir);
     $helper = new \Drupal\Dic\DicHelper($kernel);
-    if (function_exists('drupal_classloader')) {
-      $helper->setClassLoader(drupal_classloader());
-    }
-
+    $helper->setClassLoader($loader);
+    
     // provide the dic with bundle info
     $bundleInfo = _dic_get_bundle_info(!$kernel->isDebug());
     if (!empty($bundleInfo)) {
