@@ -18,14 +18,14 @@
     "require": {
         "php": ">=5.3.3",
 
-        "symfony/config": "@stable",
-        "symfony/dependency-injection": "@stable",
-        "symfony/filesystem": "@stable",
-        "symfony/http-kernel": "@stable",
-        "janschumann/classloader_composer": "@stable"
+        "symfony/config": "~2.4",
+        "symfony/dependency-injection": "~2.4",
+        "symfony/filesystem": "~2.4",
+        "symfony/http-kernel": "~2.4",
+        "janschumann/classloader_composer": "~0.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "@stable"
+        "phpunit/phpunit": "~4.4"
     },
     "autoload": {
         "psr-0": {
