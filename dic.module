@@ -71,7 +71,7 @@ function dic_menu() {
 }
 
 /**
- * Implementation of hook_dic_bundle_info()
+ * Implementation of @see hook_dic_bundle_info()
  */
 function dic_dic_bundle_info() {
   return array('bundles' => array("\\Drupal\\Dic\\Bundle\\DicBundle\\DicBundle"));

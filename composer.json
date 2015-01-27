@@ -15,23 +15,17 @@
             "homepage": "http://deck36.de"
         }
     ],
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/janschumann/drupal-composer-classloader.git"
-        }
-    ],
     "require": {
         "php": ">=5.3.3",
 
-        "symfony/config": "2.4.*",
-        "symfony/dependency-injection": "2.4.*",
-        "symfony/filesystem": "2.4.*",
-        "symfony/http-kernel": "2.4.*",
-        "janschumann/classloader_composer": "dev-master"
+        "symfony/config": "@stable",
+        "symfony/dependency-injection": "@stable",
+        "symfony/filesystem": "@stable",
+        "symfony/http-kernel": "@stable",
+        "janschumann/classloader_composer": "@stable"
     },
     "require-dev": {
-        "phpunit/phpunit": "3.7.*"
+        "phpunit/phpunit": "@stable"
     },
     "autoload": {
         "psr-0": {

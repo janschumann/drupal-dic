@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * Implements @see hook_install().
+ */
+function dic_install() {
+  // classloader has to be one of the first modules.
+  db_update('system')
+    ->fields(array('weight' =>  -5000))
+    ->condition('name', 'dic')
+    ->condition('type', 'module')
+    ->execute();
+
+  // initialize the dic.
+  drupal_dic();
+}
+
+/**
+ * Implements @see hook_enable().
+ */
+function dic_enable() {
+  dic_install();
+}
+

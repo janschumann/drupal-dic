@@ -2,8 +2,12 @@
 .idea
 *.iml
 
-# vendor files
-vendor/
-
 # composer
 composer.lock
+composer.phar
+
+# phpunit
+phpunit.xml
+
+# vendor
+/vendor/
