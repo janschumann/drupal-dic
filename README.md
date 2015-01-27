@@ -11,8 +11,12 @@ Integrates the Symfony´s Dependency Injection Container with drupal.
 
 This project can be checked out with [composer](http://getcomposer.org).
 
-```
-require: "janschumann/dic": "*"
+```json
+{
+  "require": {
+    "janschumann/dic": "*"
+  }
+}
 ```
 
 ## Confguration
@@ -25,13 +29,13 @@ This can be customized by setting the ```dic_root_dir``` variable.
 
 **Via shell script:**
 
-```
+```sh
 $ drush vset dic_root_dir <path/to/cache/dir>
 ```
 
 **Via php:**
 
-```
+```php
 variable_set('dic_root_dir', '<path/to/cache/dir>');
 ```
 
@@ -48,13 +52,13 @@ service available through the container.
 
 An instance of the event dispacher can be retrieved by
 
-```
+```php
 $dispatcher = drupal_dic()->get('event_dispatcher');
 ```
 
 To add a listener to an event, add te following to your ```settings.xml``` file.
 
-```
+```xml
 <service id="my_service" class="%my_service.class%">
   <tag name="drupal.event_listener" event="<my_event_name>" method="<method_on_my_service>" />
 </service>
@@ -62,7 +66,7 @@ To add a listener to an event, add te following to your ```settings.xml``` file.
 
 An event is dispached by:
 
-```
+```php
 drupal_dic()->get('event_dispatcher')->dispatch('<my_event_name>', <the event class>);
 ```
 
@@ -72,7 +76,7 @@ Your modules may implement ```hook_dic_bundle_info()``` as described in ```dic.a
 
 **Example:**
 
-```
+```php
 /**
  * Implements @see hook_dic_bundle_info()
  */
