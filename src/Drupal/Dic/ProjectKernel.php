@@ -95,12 +95,18 @@ class ProjectKernel extends Kernel {
    */
   protected function getEnvParameters() {
     $parameters = array();
+
+    // add config dir as a parameter
+    $parameters['kernel.config_dir'] = $this->configDir;
+
+    // add server variables
     foreach ($_SERVER as $key => $value) {
       if (0 === strpos($key, 'DRUPAL__')) {
         $parameters[strtolower(str_replace('__', '.', substr($key, 8)))] = $value;
       }
     }
 
+    // add constants
     $constants = get_defined_constants(true);
     foreach ($constants['user'] as $key => $value) {
       if (0 === strpos($key, strtoupper($this->name) . '_')) {

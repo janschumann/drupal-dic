@@ -18,7 +18,7 @@ function _dic_get_helper($re_initialize = false) {
     // load dic parameters @see dic_menu()
     $rootDir     = variable_get('dic_root_dir', '');
     if ('' == $rootDir) {
-      $rootDir = DRUPAL_ROOT . '/' . variable_get('file_public_path', '') . '/dic';
+      $rootDir = DRUPAL_ROOT . '/' . variable_get('file_public_path', 'assets') . '/dic';
     }
     $environment = variable_get('dic_environment', 'prod');
     $debug       = (boolean) variable_get('dic_debug', 0);
@@ -37,7 +37,7 @@ function _dic_get_helper($re_initialize = false) {
     $kernel = new \Drupal\Dic\ProjectKernel($environment, $debug, $rootDir, $configDir);
     $helper = new \Drupal\Dic\DicHelper($kernel);
     $helper->setClassLoader($loader);
-    
+
     // provide the dic with bundle info
     $bundleInfo = _dic_get_bundle_info(!$kernel->isDebug());
     if (!empty($bundleInfo)) {
