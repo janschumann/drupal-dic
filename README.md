@@ -85,3 +85,7 @@ function <my_module>_dic_bundle_info() {
 }
 ```
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/janschumann/drupal-dic/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
