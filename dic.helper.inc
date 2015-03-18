@@ -22,7 +22,7 @@ function _dic_get_helper($re_initialize = false) {
     }
     $environment = variable_get('dic_environment', 'prod');
     $debug       = (boolean) variable_get('dic_debug', 0);
-    $configDir   = variable_get('dic_config_dir', '');
+    $configDir   = variable_get('dic_config_dir', DRUPAL_ROOT . '/' . conf_path());
     if ('' == $configDir) {
       $configDir = DRUPAL_ROOT . '/sites/default';
     }
