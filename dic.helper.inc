@@ -68,6 +68,11 @@ function _dic_get_bundle_info($load_from_cache = true) {
   if (empty($bundle_info)) {
     // fetch bundle information from modules
     $bundle_info = module_invoke_all('dic_bundle_info');
+    // fetch bundles from variables to be able to load non drupal module bundles
+    $bundle_info_variables = variable_get('dic_bundle_info', array());
+    if (is_array($bundle_info_variables)) {
+      $bundle_info = drupal_array_merge_deep($bundle_info, $bundle_info_variables);
+    }
     cache_set('dic:bundle_info', $bundle_info);
   }
 
