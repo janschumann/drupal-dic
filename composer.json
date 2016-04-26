@@ -25,7 +25,8 @@
         "janschumann/classloader_composer": "~1.0.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.4"
+        "phpunit/phpunit": "~4.4",
+        "codeclimate/php-test-reporter": "dev-master"
     },
     "autoload": {
         "psr-0": {

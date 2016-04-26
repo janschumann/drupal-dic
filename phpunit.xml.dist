@@ -5,7 +5,16 @@
     <testsuites>
         <testsuite name="drupal-dic test suite">
             <directory suffix="Test.php">./test/phpunit</directory>
+            <filter>
+                <whitelist processUncoveredFilesFromWhitelist="true">
+                    <directory suffix=".php">./src</directory>
+                </whitelist>
+            </filter>
         </testsuite>
     </testsuites>
 
+   <logging>
+        <!-- and this is where your report will be written -->
+        <log type="coverage-clover" target="./build/logs/clover.xml"/>
+    </logging>  
 </phpunit>
