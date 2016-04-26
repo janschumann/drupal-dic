@@ -11,3 +11,6 @@ phpunit.xml
 
 # vendor
 /vendor/
+
+# build
+/build/
