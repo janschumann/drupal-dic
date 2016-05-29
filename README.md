@@ -84,8 +84,3 @@ function <my_module>_dic_bundle_info() {
   return array('bundles' => array("\\MyNamespace\\MyBundle\\Bundle\\MyBundle\\MyBundle"));
 }
 ```
-
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/janschumann/drupal-dic/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
